@@ -34,8 +34,6 @@ pico-extras/
 .claude/
 .sconsign*
 
-# Hinweis: dist/ wird BEWUSST mitversioniert. Wer nur flashen will, soll die
-# fertigen .uf2 herunterladen können, ohne erst eine Werkzeugkette einzurichten.
 
 # WAD-Dateien von id Software sind kommerzielle Daten und dürfen nicht
 # weitergegeben werden. Der Ausschluss steht hier, damit sie auch dann nicht
@@ -50,7 +48,6 @@ DOOM*.uf2
 # Ausnahme: Freedoom steht unter 3-Klausel-BSD und darf ausdrücklich
 # weitergegeben werden. Es liegt bewusst bei, damit Doom ohne eigene WAD
 # spielbar ist.
-!dist/doom/freedoom1.wad
 
 # Ebenso Game-Boy-ROMs für PicoBoyGB.
 *.gb
@@ -73,3 +70,6 @@ DOOM*.uf2
 *.gg
 *.pce
 *.sav
+
+# fertige Firmware: als GitHub-Release, nicht im Repo
+dist/

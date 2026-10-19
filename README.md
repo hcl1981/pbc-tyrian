@@ -5,7 +5,7 @@ quelloffenen Nachbau des Weltraum-Schützen *Tyrian* (1995) — auf den PicoBoy
 Color Plus. Einzelspieler und Zweispieler über ein USB-C-Kabel.
 
 ```bash
-./build.sh          # -> ../dist/tyrian-komplett.uf2
+./build.sh          # -> dist/tyrian-komplett.uf2
 ```
 
 > **Stand:** Läuft auf dem Gerät. 229 KB Firmware, 468 KB von 512 KB
@@ -43,3 +43,10 @@ spart bei jedem Durchlauf das Übertragen von fast 9 MB.
 GPL-2.0, wie OpenTyrian. Die Datei `usblink.c` stammt aus der
 rp2040-doom-Portierung für dasselbe Gerät und ist ebenfalls GPL-2.0. Die
 Tyrian-Daten sind Freeware von Jason Emery. Siehe `LICENSE`.
+
+## Herkunft und Download
+
+Teil der Sammlung für den PicoBoy Color Plus; Übersicht und
+Hardware-Referenz: [pbc-plus](https://github.com/hcl1981/pbc-plus). Die fertige Firmware
+(tyrian-komplett.uf2) liegt unter **Releases**. `./build.sh` baut nach `dist/`;
+Werkzeuge und SDK siehe [`docs/BAUEN.md`](docs/BAUEN.md).

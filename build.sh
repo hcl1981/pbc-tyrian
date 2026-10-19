@@ -10,7 +10,7 @@
 # Aufruf:   ./build.sh          bauen
 #           ./build.sh clean    Bauordner löschen und neu bauen
 #
-# Ergebnis: ../dist/tyrian-komplett.uf2   Firmware + Daten in einer Datei
+# Ergebnis: dist/tyrian-komplett.uf2   Firmware + Daten in einer Datei
 #
 # Wer nur an der Firmware arbeitet, flasht stattdessen das unverschmolzene
 # pbc-tyrian/build/tyrian.uf2 — das Datenarchiv liegt an einer anderen
@@ -18,7 +18,7 @@
 #
 set -uo pipefail
 HIER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-. "${HIER}/../tools/pbc_build.sh"
+. "${HIER}/tools/pbc_build.sh"
 
 PROJ="${HIER}/pbc-tyrian"
 OUT="${HIER}/build-out"
