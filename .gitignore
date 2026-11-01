@@ -73,3 +73,6 @@ DOOM*.uf2
 
 # fertige Firmware: als GitHub-Release, nicht im Repo
 dist/
+
+# Tyrian-Daten: werden beim Bauen geladen und nicht weitergegeben
+data/

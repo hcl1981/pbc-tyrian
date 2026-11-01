@@ -62,7 +62,7 @@ Flash-Anfang, sondern zusätzlich einen einzelnen Block ganz am Ende
 (`0x10FFFF00`). Der Spielstandsbereich lag dort zunächst mitten drin und hätte
 ihn bei jedem Speichern gelöscht.
 
-Die Tyrian-2.1-Daten sind Freeware und liegen z. B. unter
+Die Tyrian-2.1-Daten sind Freeware. `tools/hole_daten.py` lädt sie von
 `https://camanis.net/tyrian/tyrian21.zip`.
 
 ---

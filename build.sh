@@ -3,18 +3,20 @@
 # Baut OpenTyrian für den PicoBoy Color Plus.
 #
 # Zwei Schritte: erst die Firmware, dann das Datenarchiv aus den
-# Tyrian-2.1-Daten unter data/. Beides wird danach zu einer einzigen UF2
-# verschmolzen, weil Firmware und Daten an verschiedenen Flash-Adressen liegen
-# (0x10000000 bzw. 0x10100000).
+# Tyrian-2.1-Daten. Die Daten liegen nicht im Repository, sondern werden beim
+# ersten Bau von camanis.net geladen (pbc-tyrian/tools/hole_daten.py). Firmware
+# und Daten liegen an verschiedenen Flash-Adressen (0x10000000 bzw. 0x10100000).
 #
 # Aufruf:   ./build.sh          bauen
 #           ./build.sh clean    Bauordner löschen und neu bauen
 #
-# Ergebnis: dist/tyrian-komplett.uf2   Firmware + Daten in einer Datei
+# Ergebnis: dist/tyrian.uf2                nur die Firmware, weitergebbar
+#           build-out/tyrian-komplett.uf2   Firmware + Daten, nur für dich:
+#                                           die Datei enthält die Spieldaten
+#                                           und gehört nicht in Repo oder Release
 #
-# Wer nur an der Firmware arbeitet, flasht stattdessen das unverschmolzene
-# pbc-tyrian/build/tyrian.uf2 — das Datenarchiv liegt an einer anderen
-# Flash-Adresse und bleibt dabei unangetastet.
+# Wer nur an der Firmware arbeitet, flasht tyrian.uf2 — das Datenarchiv liegt an
+# einer anderen Flash-Adresse und bleibt dabei unangetastet.
 #
 set -uo pipefail
 HIER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -30,11 +32,13 @@ pbc_need cmake git python3 arm-none-eabi-gcc gcc || exit 1
 pbc_sdk || exit 1
 
 if [ ! -d "${HIER}/data/tyrian21" ]; then
-    pbc_err "Die Tyrian-Daten fehlen: ${HIER}/data/tyrian21"
-    echo "  Erwartet werden die Dateien der Tyrian-2.1-Freeware-Ausgabe" >&2
-    echo "  (tyrian1.shp, tyrian.hdt, …). Ohne sie lässt sich nur die" >&2
-    echo "  Firmware bauen, und die zeigt ohne Daten nichts an." >&2
-    exit 1
+    pbc_info "Spieldaten von camanis.net laden"
+    if ! python3 "${PROJ}/tools/hole_daten.py" "${HIER}/data/tyrian21"; then
+        pbc_err "Die Tyrian-Daten liessen sich nicht laden."
+        echo "  Ohne sie lässt sich nur die Firmware bauen, und die zeigt ohne" >&2
+        echo "  Daten nichts an." >&2
+        exit 1
+    fi
 fi
 
 pbc_cmake_build "${PROJ}" "${PROJ}/build" || exit 1
@@ -54,7 +58,7 @@ if ! python3 "${PROJ}/tools/merge_uf2.py" "${PROJ}/build/tyrian.uf2" "${OUT}/tyr
     exit 1
 fi
 
-pbc_collect "${OUT}/tyrian-komplett.uf2" "tyrian-komplett.uf2" || exit 1
+pbc_collect "${PROJ}/build/tyrian.uf2" "tyrian.uf2" || exit 1
 
-pbc_verify_dist "tyrian-komplett.uf2" || exit 1
-pbc_hint_flash
+pbc_verify_dist "tyrian.uf2" || exit 1
+pbc_ok "Zum Flashen: ${OUT}/tyrian-komplett.uf2 (nicht weitergeben)"
